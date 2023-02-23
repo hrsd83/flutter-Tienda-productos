@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_myshop/screens/product_detals_screen.dart';
 
 class ProductItem extends StatelessWidget {
   final String id;
@@ -17,12 +18,7 @@ class ProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(15),
-      child: Container(
-        child: GridTile(
-          child: Image.network(
-            imageUrl,
-            fit: BoxFit.cover,
-          ),
+      child: GridTile(
           footer: GridTileBar(
             backgroundColor: Colors.black87,
             trailing: IconButton(
@@ -42,8 +38,16 @@ class ProductItem extends StatelessWidget {
                 ),
                 onPressed: () {}),
           ),
-        ),
-      ),
+          child: GestureDetector(
+            onTap: () {
+              Navigator.of(context)
+                  .pushNamed(ProductDetalsScreen.routeName, arguments: id);
+            },
+            child: Image.network(
+              imageUrl,
+              fit: BoxFit.cover,
+            ),
+          )),
     );
   }
 }
