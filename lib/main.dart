@@ -15,17 +15,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create:(ctx) => Products(),
+      create: (ctx) => Products(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme:
             ThemeData(fontFamily: 'Lato', accentColor: Colors.deepOrangeAccent),
         home: ProductsScreen(),
-    
-        routes: {
-          ProductDetalsScreen.routeName: (ctx) => ProductDetalsScreen()
-        },
+        routes: {ProductDetalsScreen.routeName: (ctx) => ProductDetalsScreen()},
       ),
     );
   }

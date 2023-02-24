@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
-import '../models/product.dart';
+import 'product.dart';
 
 class Products with ChangeNotifier {
   final List<Product> _items = [
@@ -37,14 +37,34 @@ class Products with ChangeNotifier {
             'https://jumboargentina.vtexassets.com/arquivos/ids/604345/Consola-Playstation-5-Ps5-Hw-Standard-2-853923.jpg?v=637369032320830000',
         isFavorite: false),
   ];
+
+  var _showFavoriteOnly = false;
+
 //aca devuelve una copia de los product
   List<Product> get items {
+    // if (_showFavoriteOnly) {
+    //   return _items.where((prodItem) => prodItem.isFavorite).toList();
+    // }
     return [..._items];
   }
 
-  Product findById(String id) {
-        return _items.firstWhere((prod) => prod.id == id);
+  List<Product> get favoriteItems {
+    return _items.where((prodItem) => prodItem.isFavorite).toList();
   }
+
+  Product findById(String id) {
+    return _items.firstWhere((prod) => prod.id == id);
+  }
+
+  // void showFavoritesOnly() {
+  //   _showFavoriteOnly = true;
+  //   notifyListeners();
+  // }
+
+  // void showAll() {
+  //   _showFavoriteOnly = false;
+  //   notifyListeners();
+  // }
 
   //Metodo para agregar items
   void addProduct() {
