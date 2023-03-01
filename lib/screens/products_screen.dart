@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_myshop/providers/cart.dart';
+import 'package:flutter_myshop/screens/cart.screen.dart';
+import 'package:flutter_myshop/widgets/cart_badge.dart';
+import 'package:provider/provider.dart';
 import '../widgets/products_grid.dart';
 
 enum FilterOptions { Favorites, All }
@@ -19,9 +23,11 @@ class _ProductsScreenState extends State<ProductsScreen> {
         title: const Text('Tienda de Productos'),
         backgroundColor: Colors.black54,
         // elevation: 5,
-        centerTitle: true,
-        actions: [
-          PopupMenuButton(
+        // centerTitle: true,
+        actions: <Widget>[
+          Container(
+            margin: EdgeInsets.only(right: 20),
+            child: PopupMenuButton(
               onSelected: (FilterOptions selectedValue) {
                 setState(() {
                   if (selectedValue == FilterOptions.Favorites) {
@@ -33,21 +39,42 @@ class _ProductsScreenState extends State<ProductsScreen> {
               },
               icon: const Icon(Icons.more_vert_outlined),
               itemBuilder: (_) => const [
-                    PopupMenuItem(
-                      value: FilterOptions.Favorites,
-                      child: Text(
-                        'Mis Favoritos',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
+                PopupMenuItem(
+                  value: FilterOptions.Favorites,
+                  child: Text(
+                    'Mis Favoritos',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+                PopupMenuItem(
+                  value: FilterOptions.All,
+                  child: Text(
+                    'Mostrar Todo',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Consumer<Cart>(
+            builder: (_, cart, ch) => Container(
+              margin: EdgeInsets.only(left: 5),
+              child: CartBadge(
+                  value: cart.itemCount.toString(),
+                  color: Colors.red,
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.shopping_cart,
                     ),
-                    PopupMenuItem(
-                      value: FilterOptions.All,
-                      child: Text(
-                        'Mostrar Todo',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ])
+                    onPressed: () {
+                      Navigator.pushNamed(context, CartScreen.routeName);
+                    },
+                  )
+
+                  // child: ch,
+                  ),
+            ),
+          ),
         ],
       ),
       body: ProductsGridView(
