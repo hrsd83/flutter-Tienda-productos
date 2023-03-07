@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_myshop/providers/orders.dart';
 import 'package:provider/provider.dart';
 import '../providers/cart.dart'show Cart ;
 import '../widgets/cart_item.dart'; 
@@ -39,7 +40,10 @@ class CartScreen extends StatelessWidget {
                     ),
                     backgroundColor: Colors.red[300],
                   ),
-                  ElevatedButton(onPressed: () {}, child: const Text('Ordenar'))
+                  ElevatedButton(onPressed: () {
+                    Provider.of<Orders>(context, listen: false).addOrder(cart.items.values.toList(), cart.totalAmount);
+                    cart.clear();
+                  }, child: const Text('Ordenar'))
                 ],
               ),
             ),
@@ -48,7 +52,7 @@ class CartScreen extends StatelessWidget {
           Expanded (
             child:  ListView.builder(
               itemCount: cart.items.length,
-              itemBuilder: (ctx, i)=>CartItem(id:cart.items.values.toList()[i].id , title: cart.items.values.toList() [i].title, quantity: cart.items.values.toList()[i].quantity, price: cart.items.values.toList()[i].price)))
+              itemBuilder: (ctx, i)=>CartItem(id:cart.items.values.toList()[i].id , title: cart.items.values.toList() [i].title, quantity: cart.items.values.toList()[i].quantity, price: cart.items.values.toList()[i].price, producId: cart.items.keys.toList()[i],)))
         ],
       ),
     );

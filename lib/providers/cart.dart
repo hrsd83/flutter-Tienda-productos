@@ -14,7 +14,7 @@ class CartItem  {
 }
 
 class Cart with ChangeNotifier {
-  late final Map<String, CartItem> _items = {};
+  late  Map<String, CartItem> _items = {};
 
   Map<String, CartItem> get items {
     return {..._items};
@@ -51,4 +51,21 @@ class Cart with ChangeNotifier {
     }
     notifyListeners();
   }
+
+  //Metodo para eliminar articulo
+
+  void removeItem(String producId){
+    _items.remove(producId);
+    notifyListeners();
+  }
+
+  //Metodo para vacias carrito
+
+  void clear() {
+    _items = {};
+    notifyListeners();
+
+
+  }
 }
+
